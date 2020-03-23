@@ -1,0 +1,46 @@
+{
+	"data": {
+		"enums": {},
+		"entCompany": [{
+			"id": 1045337171,
+			"name": "fdsfd",
+			"stores": [{
+				"key": 1045337172,
+				"value": "hgfh"
+			}, {
+				"key": 1045340323,
+				"value": "百香果"
+			}, {
+				"key": 1045340325,
+				"value": "西柚"
+			}, {
+				"key": 1045340327,
+				"value": "gfdgf分店"
+			}]
+		}, {
+			"id": 1045340321,
+			"name": "公司A",
+			"stores": []
+		}, {
+			"id": 1045340322,
+			"name": "公司B",
+			"stores": [{
+				"key": 1045349406,
+				"value": "ochmd"
+			}]
+		}],
+		"businessUser": [{
+			"key": 1033250389,
+			"value": "test"
+		}, {
+			"key": 1045340319,
+			"value": "lifei"
+		}, {
+			"key": 1045340320,
+			"value": "sunxin"
+		}]
+	},
+	"success": true,
+	"message": "",
+	"code": 200
+}

@@ -1,0 +1,56 @@
+{
+	"data": {
+		"enums": {
+			"robotType": [{
+				"key": 1,
+				"value": "电脑端"
+			}, {
+				"key": 2,
+				"value": "平板端"
+			}],
+			"robotState": [{
+				"key": 1,
+				"value": "库存"
+			}, {
+				"key": 2,
+				"value": "维修中"
+			}, {
+				"key": 3,
+				"value": "使用中"
+			}]
+		},
+		"entCompany": {
+			"items": [{
+				"id": 1045337171,
+				"name": "test",
+				"stores": [{
+					"key": 1045337172,
+					"value": "fds路店"
+				}, {
+					"key": 1045340323,
+					"value": "百香果"
+				}, {
+					"key": 1045340325,
+					"value": "西柚"
+				}, {
+					"key": 1045340327,
+					"value": "分店"
+				}]
+			}, {
+				"id": 1045340321,
+				"name": "公司A",
+				"stores": []
+			}, {
+				"id": 1045340322,
+				"name": "公司B",
+				"stores": [{
+					"key": 1045349406,
+					"value": "ochdg"
+				}]
+			}]
+		}
+	},
+	"success": true,
+	"message": "",
+	"code": 200
+}

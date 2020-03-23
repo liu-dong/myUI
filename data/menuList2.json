@@ -1,0 +1,30 @@
+{
+	"data": [{
+		"id": 9,
+		"title": "数据统计",
+		"url": null,
+		"icon": "fa fa fa-bar-chart",
+		"children": [{
+			"id": 30,
+			"title": "使用统计",
+			"url": "module/count/robotusecount.html",
+			"icon": "fa fa-pie-chart",
+			"children": []
+		}]
+	}, {
+		"id": 12,
+		"title": "其他设置",
+		"url": null,
+		"icon": "fa fa fa-gear",
+		"children": [{
+			"id": 35,
+			"title": "修改密码",
+			"url": "module/other/resetpassword.html",
+			"icon": "fa fa-key fa-fw",
+			"children": []
+		}]
+	}],
+	"success": true,
+	"message": "",
+	"code": 200
+}

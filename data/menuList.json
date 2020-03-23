@@ -1,0 +1,84 @@
+{
+	"data": [{
+		"id": 2,
+		"title": "公司管理",
+		"url": null,
+		"icon": "fa fa fa-institution",
+		"children": [{
+			"id": 16,
+			"title": "公司列表",
+			"url": "module/drugstore/companylist.html",
+			"icon": "fa fa-hospital-o",
+			"children": []
+		}]
+	}, {
+		"id": 5,
+		"title": "会员管理",
+		"url": null,
+		"icon": "fa fa fa-user",
+		"children": [{
+			"id": 22,
+			"title": "会员列表",
+			"url": "module/member/memberlist.html",
+			"icon": "fa fa-list-alt",
+			"children": []
+		}]
+	}, {
+		"id": 9,
+		"title": "数据统计",
+		"url": null,
+		"icon": "fa fa fa-bar-chart",
+		"children": [{
+			"id": 30,
+			"title": "使用统计",
+			"url": "module/count/robotusecount.html",
+			"icon": "fa fa-pie-chart",
+			"children": []
+		}]
+	}, {
+		"id": 10,
+		"title": "财务管理",
+		"url": null,
+		"icon": "fa fa fa-money",
+		"children": [{
+			"id": 31,
+			"title": "交易明细",
+			"url": "module/finance/tradedetail.html",
+			"icon": "fa fa-cny",
+			"children": []
+		}]
+	}, {
+		"id": 11,
+		"title": "账号管理",
+		"url": null,
+		"icon": "fa fa fa-user-secret",
+		"children": [{
+			"id": 32,
+			"title": "账号管理",
+			"url": "module/account/account.html",
+			"icon": "fa fa-user fa-fw",
+			"children": []
+		}, {
+			"id": 33,
+			"title": "角色管理",
+			"url": "module/account/role.html",
+			"icon": "fa fa-user-circle-o",
+			"children": []
+		}]
+	}, {
+		"id": 12,
+		"title": "其他设置",
+		"url": null,
+		"icon": "fa fa fa-gear",
+		"children": [{
+			"id": 35,
+			"title": "修改密码",
+			"url": "module/other/resetpassword.html",
+			"icon": "fa fa-key fa-fw",
+			"children": []
+		}]
+	}],
+	"success": true,
+	"message": "",
+	"code": 200
+}
