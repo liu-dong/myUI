@@ -67,7 +67,7 @@
             padding-left: 36px;
         }
 
-        #Captcha {
+        #captcha {
             width: 60%;
             display: inline-block;
         }
@@ -100,28 +100,28 @@
                         <h1>用户登录</h1>
                     </div>-->
                     <div class="layui-form-item">
-                        <label class="layui-icon layui-icon-username" for="UserName"></label>
-                        <input type="text" name="UserName" id="UserName" lay-verify="required|account"
+                        <label class="layui-icon layui-icon-username" for="username"></label>
+                        <input type="text" name="username" id="username" lay-verify="required|account"
                                placeholder="用户名或者邮箱" autocomplete="off" class="layui-input" value="admin">
                     </div>
                     <div class="layui-form-item">
-                        <label class="layui-icon layui-icon-password" for="Password"></label>
-                        <input type="password" name="Password" id="Password" lay-verify="required|password"
+                        <label class="layui-icon layui-icon-password" for="password"></label>
+                        <input type="password" name="password" id="password" lay-verify="required|password"
                                placeholder="密码" autocomplete="off" class="layui-input" value="root">
                     </div>
-                    <div class="layui-form-item">
-                        <label class="layui-icon layui-icon-vercode" for="Captcha"></label>
-                        <input type="text" name="Captcha" id="Captcha" lay-verify="required|captcha" placeholder="图形验证码"
+                    <!--<div class="layui-form-item">
+                        <label class="layui-icon layui-icon-vercode" for="captcha"></label>
+                        <input type="text" name="captcha" id="captcha" lay-verify="required|captcha" placeholder="图形验证码"
                                autocomplete="off" class="layui-input verification" value="1234">
                         <div class="captcha-img">
-                            <img id="captchaPic" src="">
+                            <img id="captchaPic" src="" alt="验证码">
                         </div>
-                    </div>
+                    </div>-->
                     <div class="layui-form-item">
                         <input type="checkbox" name="rememberMe" value="true" lay-skin="primary" title="记住密码">
                     </div>
                     <div class="layui-form-item">
-                        <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="form-login">登 入</button>
+                        <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="form-login">登 录</button>
                     </div>
                 </form>
             </div>
@@ -142,7 +142,6 @@
         s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
         s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
         s[8] = s[13] = s[18] = s[23] = "-";
-
         return s.join("");
     }
 
@@ -157,10 +156,10 @@
             ajaxMod = layui.ajaxMod,
             verifyMod = layui.verifyMod;
 
-        if (localStorage.getItem('rememberme')) {
-            var setval = JSON.parse(localStorage.getItem('rememberme'));
-            $("input[name='UserName']").val(setval.username)
-            $("input[name='Password']").val(setval.password)
+        if (localStorage.getItem('rememberMe')) {
+            let setValue = JSON.parse(localStorage.getItem('rememberMe'));
+            $("input[name='UserName']").val(setValue.username);
+            $("input[name='Password']").val(setValue.password);
         }
 
         // 初始验证码 （盗用官方的哈哈）
@@ -173,34 +172,31 @@
 
         // 字段校验
         form.verify(verifyMod);
-
         //监听提交
         form.on('submit(form-login)', function (data) {
+            debugger
             data.field.CaptchaKey = uuid;
             ajaxMod.layuiGet({
-                url: "/data/login.json", data: data.field, success: function (res) {
+                url: "/login", data: data.field, success: function (res) {
+                    debugger
                     if (res.success) {
-                        cookie.set("userToken", res.data.token);
-                        cookie.set("username", res.data.userName);
+                        cookie.set("token", res.data.userToken);
+                        cookie.set("username", res.data.username);
                         cookie.set("name", res.data.name);
-
-                        let reobj = {
-                            username: data.field.UserName,
-                            password: data.field.Password
+                        let obj = {
+                            username: data.field.username,
+                            password: data.field.password
                         };
-
+                        //如果选择的记住密码则把密码保存在本地，否则移除已记住的密码
                         if (data.field.rememberMe) {
-                            localStorage.setItem("rememberme", JSON.stringify(reobj));
+                            localStorage.setItem("rememberMe", JSON.stringify(obj));
                         } else {
-                            localStorage.removeItem("rememberme");
+                            localStorage.removeItem("rememberMe");
                         }
-
                         layer.msg('登录成功', {
                             icon: 1
                         });
-
                         window.location.href = "index.html"
-
                     } else {
                         layer.msg(res.message, {
                             icon: 2

@@ -20,7 +20,7 @@ layui.define(["jquery", "element", "nprogress","layer"], function(i) {
 			this.config = {
 				elem: void 0,
 				mainUrl: "main.html"
-			}, 
+			};
 			this.v = "1.0.2"
 		};
 		
