@@ -3,7 +3,8 @@ layui.define(['jquery', 'layer'], function (exports) {
     const $ = layui.jquery,
         layer = layui.layer;
     // 获取全局变量
-    const domain = baseUrl;
+    const urlPrefix = baseUrl;
+    
     //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
     /* layui ajax 封装
      * url 接口地址
@@ -32,7 +33,7 @@ layui.define(['jquery', 'layer'], function (exports) {
             console.log('请求成功');
             setTimeout(function () {
                 layer.msg(data.msg); //通过layer插件来进行提示信息
-            }, 300);
+            }, 200);
             if (data.status) { //服务器处理成功
                 setTimeout(function () {
                     if (data.url) {
@@ -50,7 +51,7 @@ layui.define(['jquery', 'layer'], function (exports) {
         };
 
         let error = parameters.error || function (data) {
-            /*console.error('请求失败');*/
+            console.log('请求失败');
             /*data.status;//错误状态吗*/
             layer.closeAll('loading');
             setTimeout(function () {
@@ -133,7 +134,7 @@ layui.define(['jquery', 'layer'], function (exports) {
             let url = parameters.url || true;
             let data = parameters.data || true;
             let success = parameters.success || true;
-            let urlAddress = urlBoolean ? url + "?token=" + cookie.get('token') : domain + url + "?token=" + cookie.get('token');
+            let urlAddress = urlBoolean ? url + "?token=" + cookie.get('token') : urlPrefix + url + "?token=" + cookie.get('token');
             ajax({
                 url: urlAddress,
                 data: data,
@@ -152,7 +153,7 @@ layui.define(['jquery', 'layer'], function (exports) {
             let url = parameters.url || true;
             let data = parameters.data || true;
             let success = parameters.success || true;
-            let urlAddress = urlBoolean ? url + "?token=" + cookie.get('token') : domain + url + "?token=" + cookie.get('token');
+            let urlAddress = urlBoolean ? url + "?token=" + cookie.get('token') : urlPrefix + url + "?token=" + cookie.get('token');
             ajax({
                 "url": urlAddress,
                 "data": data,
@@ -171,7 +172,7 @@ layui.define(['jquery', 'layer'], function (exports) {
             let success = parameters.success;
             let cache = parameters.cache;
             let alone = parameters.alone;
-            let urlAddress = urlBoolean ? url + "?token=" + cookie.get('token') : domain + url + "?token=" + cookie.get('token');
+            let urlAddress = urlBoolean ? url + "?token=" + cookie.get('token') : urlPrefix + url + "?token=" + cookie.get('token');
             ajax({
                 url: urlAddress,
                 data: {},

@@ -133,6 +133,7 @@
 </div>
 <script>
     let uuid = "";
+
     function getUuid() {
         let s = [];
         let hexDigits = "0123456789abcdef";
@@ -176,35 +177,36 @@
         form.on('submit(form-login)', function (data) {
             debugger
             data.field.CaptchaKey = uuid;
-            ajaxMod.layuiGet({
-                url: "/login", data: data.field, success: function (res) {
-                    debugger
-                    if (res.success) {
-                        cookie.set("token", res.data.userToken);
-                        cookie.set("username", res.data.username);
-                        cookie.set("name", res.data.name);
-                        let obj = {
-                            username: data.field.username,
-                            password: data.field.password
-                        };
-                        //如果选择的记住密码则把密码保存在本地，否则移除已记住的密码
-                        if (data.field.rememberMe) {
-                            localStorage.setItem("rememberMe", JSON.stringify(obj));
+            ajaxMod.layuiGet(
+                {
+                    url: "/login", data: data.field, success: function (res) {
+                        debugger
+                        if (res.success) {
+                            cookie.set("token", res.data.userToken);
+                            cookie.set("username", res.data.username);
+                            cookie.set("name", res.data.name);
+                            let obj = {
+                                username: data.field.username,
+                                password: data.field.password
+                            };
+                            //如果选择的记住密码则把密码保存在本地，否则移除已记住的密码
+                            if (data.field.rememberMe) {
+                                localStorage.setItem("rememberMe", JSON.stringify(obj));
+                            } else {
+                                localStorage.removeItem("rememberMe");
+                            }
+                            layer.msg('登录成功', {
+                                icon: 1
+                            });
+                            window.location.href = "index.html"
                         } else {
-                            localStorage.removeItem("rememberMe");
+                            layer.msg(res.message, {
+                                icon: 2
+                            });
+                            $("#captchaPic").attr('src', baseUrl + "/api/sys/security/GetCaptcha?uuid=" + uuidStr());
                         }
-                        layer.msg('登录成功', {
-                            icon: 1
-                        });
-                        window.location.href = "index.html"
-                    } else {
-                        layer.msg(res.message, {
-                            icon: 2
-                        });
-                        $("#captchaPic").attr('src', baseUrl + "/api/sys/security/GetCaptcha?uuid=" + uuidStr());
                     }
-                }, urlBoolean: 1
-            });
+                }, 1);
             return false;
         });
     });
