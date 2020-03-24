@@ -216,10 +216,11 @@
         };
 
         // 按钮事件
-        /*$('#page-wrapper .layui-action').on('click', function () {
+        $('#page-wrapper .layui-action').on('click', function () {
+            debugger
             let type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
-        });*/
+        });
 
         const searchArr = [];
         // 验证登录

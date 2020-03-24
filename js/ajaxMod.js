@@ -18,8 +18,6 @@ layui.define(['jquery', 'layer'], function (exports) {
      * error ： 请求失败后执行的函数
      */
     function ajax(parameters) {
-        debugger
-        // let {url, data, success, cache, alone, async, type, dataType, error} = parameters;
         let url = parameters.url;
         let data = parameters.data;
         let type = parameters.type || 'post'; //请求类型
@@ -134,7 +132,7 @@ layui.define(['jquery', 'layer'], function (exports) {
             let url = parameters.url || true;
             let data = parameters.data || true;
             let success = parameters.success || true;
-            let urlAddress = urlBoolean ? url + "?token=" + cookie.get('token') : urlPrefix + url + "?token=" + cookie.get('token');
+            let urlAddress = urlBoolean ? url + "?userToken=" + cookie.get('userToken') : urlPrefix + url + "?userToken=" + cookie.get('userToken');
             ajax({
                 url: urlAddress,
                 data: data,
@@ -149,11 +147,10 @@ layui.define(['jquery', 'layer'], function (exports) {
         },
         // ajax提交(get方式提交,urlBoolean：代表url中的boolean类型值)
         layuiGet: function (parameters,urlBoolean) {
-            debugger
-            let url = parameters.url || true;
+            let url = parameters.url;
             let data = parameters.data || true;
             let success = parameters.success || true;
-            let urlAddress = urlBoolean ? url + "?token=" + cookie.get('token') : urlPrefix + url + "?token=" + cookie.get('token');
+            let urlAddress = urlBoolean ? url + "?userToken=" + cookie.get('userToken') : urlPrefix + url + "?userToken=" + cookie.get('userToken');
             ajax({
                 "url": urlAddress,
                 "data": data,
@@ -172,7 +169,7 @@ layui.define(['jquery', 'layer'], function (exports) {
             let success = parameters.success;
             let cache = parameters.cache;
             let alone = parameters.alone;
-            let urlAddress = urlBoolean ? url + "?token=" + cookie.get('token') : urlPrefix + url + "?token=" + cookie.get('token');
+            let urlAddress = urlBoolean ? url + "?userToken=" + cookie.get('userToken') : urlPrefix + url + "?userToken=" + cookie.get('userToken');
             ajax({
                 url: urlAddress,
                 data: {},

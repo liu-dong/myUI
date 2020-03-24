@@ -176,13 +176,12 @@
         //监听提交
         form.on('submit(form-login)', function (data) {
             debugger
-            data.field.CaptchaKey = uuid;
+            data.field.captchaKey = uuid;
             ajaxMod.layuiGet(
                 {
                     url: "/login", data: data.field, success: function (res) {
-                        debugger
                         if (res.success) {
-                            cookie.set("token", res.data.userToken);
+                            cookie.set("userToken", res.data.userToken);
                             cookie.set("username", res.data.username);
                             cookie.set("name", res.data.name);
                             let obj = {
@@ -206,7 +205,7 @@
                             $("#captchaPic").attr('src', baseUrl + "/api/sys/security/GetCaptcha?uuid=" + uuidStr());
                         }
                     }
-                }, 1);
+                }, 0);
             return false;
         });
     });

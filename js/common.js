@@ -2,7 +2,7 @@
 console.log("Power By LD");
 
 // 接口域
-const baseUrl = window.baseUrl = 'http://localhost:8181';
+const baseUrl = window.baseUrl = 'http://localhost:8081';
 
 // config的设置是全局的
 layui.config({
