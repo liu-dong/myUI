@@ -22,8 +22,8 @@ layui.define(['jquery'], function (exports) {
         password: [/(.+){4,10}$/, '密码必须4到10位'],
         // 验证码
         captcha: function (value) {
-            if (value.length !== 4) {
-                return '验证码必须为4位';
+            if (value.length !== 5) {
+                return '验证码必须为5位';
             }
         },
         // 金额
