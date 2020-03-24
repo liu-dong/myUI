@@ -92,6 +92,10 @@ layui.define(['jquery', 'layer'], function (exports) {
                     shade: 0.06
                 });
             },
+            //解决跨域session问题
+            xhrFields: {
+                withCredentials: true
+            },
         }).done(function (data) {
 
         }).fail(function (data) {
