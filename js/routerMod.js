@@ -1,6 +1,7 @@
 // 路由封装
 layui.define(function (exports) {
     window.Router = function () {
+        debugger
         let self = this;
         self.hashList = {};
         /* 路由表 */
@@ -20,6 +21,7 @@ layui.define(function (exports) {
      * @param callback: 回调函数，调用回调函数的时候同时也会传入相应参数
      */
     Router.prototype.add = function (address, callback) {
+        debugger
         let self = this;
         self.hashList[address] = callback;
     };

@@ -1,36 +1,30 @@
-//layui.use(['layer'], function(){
-//  $('.layui-tip').on('mouseenter',function(){
-//      layer.tips($(this).attr("layui-tips"), $(this), {
-//          time: 150000
-//      });
-//  }).on('mouseleave',function(){
-//      layer.closeAll('tips');
-//  });
-//})
-
-
 layui.define(["jquery", "element", "nprogress","layer"], function(i) {
 	
 	const t = layui.jquery,
+		$ = layui.jquery,
 		e = layui.element,
 		layer = layui.layer,
-		a = t(document),
-		l = t(window),
+		a = $(document),//$(document)是一个选择器，选中的是整个html所有元素的集合。（html对象）
+		l = $(window),//$(window)是一个选择器，选中的是整个浏览器所有元素的集合。（浏览器对象）
+		$document = $(document),//$(document)是一个选择器，选中的是整个html所有元素的集合。（html对象）
+		$window = $(window),//$(window)是一个选择器，选中的是整个浏览器所有元素的集合。（浏览器对象）
 		n = function() {
 			this.config = {
-				elem: void 0,
+				elem: void 0,//void是javascript中的一个函数，接受一个参数，返回值永远是undefined
 				mainUrl: "main.html"
 			};
 			this.v = "1.0.2"
 		};
-		
+
 		(n.fn = n.prototype).set = function(i) {
-			var e = this;
-			return t.extend(!0, e.config, i), e
+			let _this = this;
+			return t.extend(!0, _this.config, i), _this
 		}, n.fn.render = function() {
-			var i = this,
+			let i = this,
 				t = i.config;
-			return void 0 === t.elem ? (layui.hint().error("Tab error:请配置选择卡容器."), i) : (c._config = t, c.createTabDom(), i)
+			//layui.hint():向控制台打印一些异常信息，目前只返回了 error 方法：layui.hint().error('出错啦')
+			return void 0 === t.elem ? (layui.hint().error("Tab error:请配置选择卡容器."), i)
+				: (c._config = t, c.createTabDom(), i);
 		}, n.fn.tabAdd = function(i) {
 			c.tabAdd(i)
 		};
@@ -43,6 +37,7 @@ layui.define(["jquery", "element", "nprogress","layer"], function(i) {
 			_title: void 0,
 			_content: void 0,
 			_parentElem: void 0,
+
 			tabDomExists: function() {
 				var i = this;
 				return a.find("div.kit-tab").length > 0 && (i._title = t(".kit-tab ul.layui-tab-title"), i._content = t(".kit-tab div.layui-tab-content"), !0)

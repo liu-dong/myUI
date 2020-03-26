@@ -27,8 +27,7 @@
     <!--公共函数库-->
     <script src="js/common.js"></script>
     <!--访问统计 百度-->
-    <!--<script>
-        const _hmt = _hmt || [];
+   <!-- <script>
         (function () {
             let hm = document.createElement("script");
             hm.src = "https://hm.baidu.com/hm.js?1123c6760cbd8bd962766d0f2d3f2cf4";
@@ -78,7 +77,7 @@
             </li>
             <li class="layui-nav-item">
                 <a href="javascript:void(0);">
-                    <img src="images/admin.jpg" class="layui-nav-img">{{ cookie.get('name') }}
+                    <img src="images/admin.jpg" class="layui-nav-img" alt="用户头像">{{ cookie.get('name') }}
                 </a>
                 <dl class="layui-nav-child">
                     <dt class="layui-action" data-type="baseInfo">
@@ -109,7 +108,8 @@
                 <i class="fa fa-navicon" aria-hidden="true"></i>
             </div>
             <!--菜单列表-->
-            <ul class="layui-nav layui-nav-tree" lay-filter="kitNavbar" kit-navbar></ul>
+            <ul class="layui-nav layui-nav-tree" lay-filter="kitNavbar" kit-navbar>
+            </ul>
         </div>
     </div>
     <!--右上侧主体栏-->
@@ -145,21 +145,21 @@
         base: 'js/'
     }).use(['app', 'message', 'tab', 'ajaxMod', 'form', 'routerMod'], function () {
         const $ = layui.jquery,
-            app = layui.app,
             layer = layui.layer,
+            form = layui.form,
+            element = layui.element,
+            app = layui.app,
             tab = layui.tab,
             ajaxMod = layui.ajaxMod,
             routerMod = layui.routerMod,
-            form = layui.form,
-            element = layui.element,
             // 将message设置为全局以便子页面调用
             message = layui.message;
         //主入口
-        /*app.set({
+        app.set({
             type: 'iframe',
             // 设置切换是否刷新
             isRefresh: true
-        }).init();*/
+        }).init();//等于app.set();app.init();
 
         // 获取服务器时间
         /*ajaxFun("GET", "", function (ajaxObj) {
@@ -217,7 +217,6 @@
 
         // 按钮事件
         $('#page-wrapper .layui-action').on('click', function () {
-            debugger
             let type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
@@ -230,39 +229,43 @@
                 shade: [0.8, '#393D49']
             });
             setTimeout(function () {
-                window.location.href = "login.html"
-            }, 3000);
+                active.logout();
+            }, 1000);
         } else {
-            ajaxMod.layuiGet("/data/menuList.json", "", function (res) {
-                let str = `<option value="">便捷菜单查询</option>`;
-                res.data.forEach(function (e) {
-                    e.children.forEach(function (i) {
-                        let strArr = i.url.split("/");
-                        let anchor = strArr[strArr.length - 1].split(".")[0];
-                        routerMod.add(anchor, (function (i) {
-                            return function () {
-                                let data = {
-                                    icon: i.icon,
-                                    id: i.id,
-                                    title: i.title,
-                                    url: i.url
-                                };
-                                active.changePage(data);
-                            }
-                        }(i)));
-                        searchArr.push(i);
-                        str += `<option value=${i.id}>${i.title}</option>`;
-                    })
-                });
-                $("#search-menu").html(`<select lay-filter="select-search" lay-search >${str}</select>`);
-                form.render();
-                if (!res.success) {
-                    layer.msg(res.message, {
-                        icon: 2
-                    });
-                    window.location.href = "login.html"
-                }
-            }, 1)
+            ajaxMod.layuiGet(
+                {
+                    url: "/data/menuList.json", data: "", success: function (res) {
+                        let str = "<option value=\"\">便捷菜单查询</option>";
+                        res.data.forEach(function (e) {
+                            e.children.forEach(function (i) {
+                                let strArr = i.url.split("/");
+                                let anchor = strArr[strArr.length - 1].split(".")[0];
+                                routerMod.add(anchor, (function (i) {
+                                    return function () {
+                                        let data = {
+                                            icon: i.icon,
+                                            id: i.id,
+                                            title: i.title,
+                                            url: i.url
+                                        };
+                                        active.changePage(data);
+                                    }
+                                }(i)));
+                                searchArr.push(i);
+                                str += `<option value=${i.id}>${i.title}</option>`;
+                            })
+                        });
+                        $("#search-menu").html('<select lay-filter="select-search" lay-search >${str}</select>');
+                        form.render();
+                        if (!res.success) {
+                            layer.msg(res.message, {
+                                icon: 2
+                            });
+                            window.location.href = "login.html"
+                        }
+                    }
+                }, 1
+            )
         }
 
         // 便捷查询
