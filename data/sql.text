@@ -1,0 +1,40 @@
+一、一级菜单
+INSERT INTO `sys_menu` ( `id`, `parent_id`, `menu_name`, `menu_level`, `menu_icon`, `menu_order`, `menu_url`, `menu_path`, `menu_status`, `has_child`, `create_time`, `update_time` )
+VALUES ( REPLACE (UUID(), '-', ''), NULL, '公司管理', '1', 'fa fa fa-institution', '0', NULL, '/公司管理', '1', '1', NOW(), NOW());
+
+INSERT INTO `sys_menu` ( `id`, `parent_id`, `menu_name`, `menu_level`, `menu_icon`, `menu_order`, `menu_url`, `menu_path`, `menu_status`, `has_child`, `create_time`, `update_time` )
+VALUES ( REPLACE (UUID(), '-', ''), NULL, '会员管理',  '1', 'fa fa fa-user', '1', NULL, '/会员管理', '1', '1', NOW(), NOW());
+
+INSERT INTO `sys_menu` ( `id`, `parent_id`, `menu_name`, `menu_level`, `menu_icon`, `menu_order`, `menu_url`, `menu_path`, `menu_status`, `has_child`, `create_time`, `update_time` )
+VALUES ( REPLACE (UUID(), '-', ''), NULL, '数据统计', '1', 'fa fa fa-bar-chart', '2', NULL, '/数据统计', '1', '1', NOW(), NOW());
+
+INSERT INTO `sys_menu` ( `id`, `parent_id`, `menu_name`, `menu_level`, `menu_icon`, `menu_order`, `menu_url`, `menu_path`, `menu_status`, `has_child`, `create_time`, `update_time` )
+VALUES ( REPLACE (UUID(), '-', ''), NULL, '财务管理', '1', 'fa fa fa-money', '3', NULL, '/财务管理', '1', '1', NOW(), NOW());
+
+INSERT INTO `sys_menu` ( `id`, `parent_id`, `menu_name`, `menu_level`, `menu_icon`, `menu_order`, `menu_url`, `menu_path`, `menu_status`, `has_child`, `create_time`, `update_time` )
+VALUES ( REPLACE (UUID(), '-', ''), NULL, '账号管理', '1', 'fa fa fa-user-secret', '4', NULL, '/账号管理', '1', '1', NOW(), NOW());
+
+INSERT INTO `sys_menu` ( `id`, `parent_id`, `menu_name`, `menu_level`, `menu_icon`, `menu_order`, `menu_url`, `menu_path`, `menu_status`, `has_child`, `create_time`, `update_time` )
+VALUES ( REPLACE (UUID(), '-', ''), NULL, '其他设置', '1', 'fa fa fa-gear', '5', NULL, '/其他设置', '1', '1', NOW(), NOW());
+
+二、二级菜单
+INSERT INTO `sys_menu` ( `id`, `parent_id`, `menu_name`, `menu_level`, `menu_icon`, `menu_order`, `menu_url`, `menu_path`, `menu_status`, `has_child`, `create_time`, `update_time` )
+VALUES ( REPLACE (UUID(), '-', ''), NULL, '公司列表', '2', 'fa fa-hospital-o', '1', 'module/drugstore/companylist.html', '/公司管理/公司列表', '1', '0', NOW(), NOW());
+
+INSERT INTO `sys_menu` ( `id`, `parent_id`, `menu_name`, `menu_level`, `menu_icon`, `menu_order`, `menu_url`, `menu_path`, `menu_status`, `has_child`, `create_time`, `update_time` )
+VALUES ( REPLACE (UUID(), '-', ''), NULL, '会员列表',  '2', 'fa fa-list-alt', '1', 'module/member/memberlist.html', '/会员管理/会员列表', '1', '0', NOW(), NOW());
+
+INSERT INTO `sys_menu` ( `id`, `parent_id`, `menu_name`, `menu_level`, `menu_icon`, `menu_order`, `menu_url`, `menu_path`, `menu_status`, `has_child`, `create_time`, `update_time` )
+VALUES ( REPLACE (UUID(), '-', ''), NULL, '使用统计', '2', 'fa fa-pie-chart', '1', 'module/count/robotusecount.html', '/数据统计/使用统计', '1', '0', NOW(), NOW());
+
+INSERT INTO `sys_menu` ( `id`, `parent_id`, `menu_name`, `menu_level`, `menu_icon`, `menu_order`, `menu_url`, `menu_path`, `menu_status`, `has_child`, `create_time`, `update_time` )
+VALUES ( REPLACE (UUID(), '-', ''), NULL, '交易明细', '2', 'fa fa-cny', '1', 'module/finance/tradedetail.html', '/财务管理/交易明细', '1', '0', NOW(), NOW());
+
+INSERT INTO `sys_menu` ( `id`, `parent_id`, `menu_name`, `menu_level`, `menu_icon`, `menu_order`, `menu_url`, `menu_path`, `menu_status`, `has_child`, `create_time`, `update_time` )
+VALUES ( REPLACE (UUID(), '-', ''), NULL, '账号管理', '2', 'fa fa fa-user-secret', '1', 'module/account/account.html', '/账号管理/账号管理', '1', '0', NOW(), NOW());
+
+INSERT INTO `sys_menu` ( `id`, `parent_id`, `menu_name`, `menu_level`, `menu_icon`, `menu_order`, `menu_url`, `menu_path`, `menu_status`, `has_child`, `create_time`, `update_time` )
+VALUES ( REPLACE (UUID(), '-', ''), NULL, '角色管理', '2', 'fa fa-user-circle-o', '2', 'module/account/role.html', '/账号管理/角色管理', '1', '0', NOW(), NOW());
+
+INSERT INTO `sys_menu` ( `id`, `parent_id`, `menu_name`, `menu_level`, `menu_icon`, `menu_order`, `menu_url`, `menu_path`, `menu_status`, `has_child`, `create_time`, `update_time` )
+VALUES ( REPLACE (UUID(), '-', ''), NULL, '修改密码', '2', 'fa fa-key fa-fw', '1', 'module/other/resetpassword.html', '/其他设置/修改密码', '1', '0', NOW(), NOW());
