@@ -79,25 +79,9 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
                             let src = $(".layui-tab-content").find(".layui-show iframe").attr("src");
                             $(".layui-tab-content").find(".layui-show iframe").attr("src", src);
                         }
-                        //选项卡切换时触发
-                        //lay-id值
-                        //console.log(data.layId);
-                        //得到当前Tab的所在下标
-                        //console.log(data.index);
-                        //得到当前的Tab大容器
-                        //console.log(data.elem);
                     },
                     closeBefore: function (data) {
                         //关闭选项卡之前触发
-                        //显示的图标
-                        //console.log(data);
-                        //console.log(data.icon);
-                        //lay-id
-                        //console.log(data.id);
-                        //显示的标题
-                        //console.log(data.title);
-                        //跳转的地址
-                        //console.log(data.url);
                         return true; //返回true则关闭
                     }
                 }).render();

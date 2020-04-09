@@ -14,13 +14,14 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
     };
 
     //设置tab页参数值
-    n.fn = n.prototype.set = function (params) {
+    (n.fn = n.prototype).set = function (params) {
         let _this = this;
         $.extend(true, _this.config, params);
         debugger
         return _this;
     };
     n.fn.render = function () {
+        debugger
         let _this = this,
             _config = _this.config;
         //layui.hint():向控制台打印一些异常信息，目前只返回了 error 方法：layui.hint().error('出错啦')
@@ -33,6 +34,7 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
         return _this;
     };
     n.fn.tabAdd = function (params) {
+        debugger
         obj.tabAdd(params)
     };
 
@@ -54,27 +56,25 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
                 return false;
             }
         },
+        //创建标签栏
         createTabDom: function () {
+            debugger
             let _this = this;
             let config = _this._config;
             _this._parentElem = config.elem;
             if (!_this.tabDomExists()) {
-                const action = "<ul class='anspray-tool-body'>" +
-                    "<li class='' data-action='toleft'>" +
+                const toolBar = "<ul class='anspray-tool-body'>" +
+                    "<li class='' data-action='toLeft'>" +
                     "<div class='kit-side-fold' title='左侧菜单' style='color:#333;'>" +
                     "<i class='fa fa-arrow-left' aria-hidden='true'>" +
                     "</i></div></li>" +
-                    "<li class='fullscreen layui-tip' data-action='fullscreen' layui-tips='全屏'>" +
+                    "<li class='fullscreen layui-tip' data-action='fullScreen' layui-tips='全屏'>" +
                     "<a href='javascript:;' title='全屏' style='color:#333;'>" +
                     "<i class='fa fa-arrows-alt' aria-hidden='true'>" +
                     "</i></a></li>" +
                     "<li class='lockcms layui-tip' data-action='lockcms' layui-tips='锁屏'>" +
                     "<a href='javascript:;' title='' style='color:#333;'>" +
                     "<i class='fa fa-lock' aria-hidden='true'>" +
-                    "</i></a></li>" +
-                    "<li class='hide' data-action='clearcache'>" +
-                    "<a id='clear' title='清空缓存' style='color:#333;'>" +
-                    "<i class='fa fa-trash' aria-hidden='true'>" +
                     "</i></a></li>" +
                     "<li class='kit-item layui-tip' data-action='refresh' layui-tips='刷新'>" +
                     "<a title='' style='color:#333;'>" +
@@ -84,7 +84,12 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
                     "<a id='kit-side-fold' title='' style='color:#333;'>" +
                     "<i class='fa fa-qrcode' aria-hidden='true'>" +
                     "</i></a></li>" +
-                    "<li class='hide' data-action='print'>" +
+                    /*隐藏项*/
+                    "<li class='hide' data-action='clearcache'>" +
+                    "<a id='clear' title='清空缓存' style='color:#333;'>" +
+                    "<i class='fa fa-trash' aria-hidden='true'>" +
+                    "</i></a></li>" +
+                    "<li class='layui-tip' data-action='print' layui-tips='打印'>" +
                     "<a id='kit-side-fold' title='' style='color:#333;'>" +
                     "<i class='fa fa-print' aria-hidden='true'>" +
                     "</i></a></li>" +
@@ -92,11 +97,14 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
                     "<a id='kit-side-fold' title='table导出csv' style='color:#333;'>" +
                     "<i class='fa fa-table' aria-hidden='true'>" +
                     "</i></a></li></ul>";
-                let a = ['<div class="layui-tab layui-tab-card kit-tab" lay-filter="' + i._filter + '">',
+                //标签栏
+                let tabBar = ['<div class="layui-tab layui-tab-card kit-tab" lay-filter="' + _this._filter + '">',
+                    /*主页图标按钮*/
                     '<ul class="layui-tab-title">',
                     '<li class="layui-this" lay-id="-1"><i class="layui-icon">&#xe68e;</i></li>',
                     '</ul>',
-                    action + "<div class='kit-tab-tool'><i class='fa fa-chevron-down'></i></div>",
+                    /*工具栏选项*/
+                    toolBar + "<div class='kit-tab-tool'><i class='fa fa-chevron-down'></i></div>",
                     '<div class="kit-tab-tool-body layui-anim layui-anim-upbit">',
                     "<ul>",
                     '<li class="kit-item" data-target="refresh">刷新当前选项卡</li>',
@@ -107,13 +115,14 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
                     '<li class="kit-item" data-target="closeAll">关闭所有选项卡</li>',
                     "</ul>",
                     "</div>",
+                    /*主体区域*/
                     '<div class="layui-tab-content">',
                     '<div class="layui-tab-item layui-show" lay-item-id="-1"><iframe src="' + config.mainUrl + '"></iframe></div>',
                     "</div>",
                     "</div>"];
-                $(config.elem).html(a.join(""));
-                _this._title = $(".kit-tab ul.layui-tab-title");
-                _this._content = $(".kit-tab div.layui-tab-content");
+                $(config.elem).html(tabBar.join(""));
+                _this._title = $(".kit-tab ul.layui-tab-title");//标签栏
+                _this._content = $(".kit-tab div.layui-tab-content");//主体内容
 
                 let tool = $(".kit-tab-tool"),
                     toolBody = $(".kit-tab-tool-body");
@@ -122,40 +131,42 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
                     toolBody.toggle()
                 });
                 toolBody.find("li.kit-item").each(function () {
-                    let target = $(this).data("target");
+                    let targetButton = $(this).data("target");
                     $(this).off("click").on("click", function () {
-                        let layId = _this._title.children("li[class=layui-this]").attr("lay-id");
-                        switch (target) {
-                            case "refresh":
-                                let iframe = i._content.children("div[lay-item-id=" + layId + "]").children("iframe");
+                        let thisLayId = _this._title.children("li[class=layui-this]").attr("lay-id");//获取当前选项卡的id
+                        //执行按钮功能
+                        switch (targetButton) {
+                            case "refresh"://刷新
+                                let iframe = _this._content.children("div[lay-item-id=" + thisLayId + "]").children("iframe");
                                 iframe.attr("src", iframe.attr("src"));
                                 break;
-                            case "closeCurrent":
-                                -1 !== layId && _this.tabDelete(layId);
+                            case "closeCurrent"://关闭当前选项卡
+                                -1 !== thisLayId && _this.tabDelete(thisLayId);
                                 break;
-                            case "closeOther":
+                            case "closeOther"://关闭其他选项卡
                                 _this._title.children("li[lay-id]").each(function () {
-                                    let _layId = $(this).attr("lay-id");
-                                    if (_layId !== layId && -1 !== _layId) {
-                                        _this.tabDelete(_layId);
+                                    let otherLayId = $(this).attr("lay-id");//非当前选项卡layId
+                                    if (otherLayId !== thisLayId && -1 !== otherLayId) {
+                                        _this.tabDelete(otherLayId);
                                     }
                                 });
                                 break;
-                            case "closeAll":
+                            case "closeAll"://关闭所有
                                 _this._title.children("li[lay-id]").each(function () {
-                                    let _layId = $(this).attr("lay-id");
-                                    -1 !== _layId && i.tabDelete(_layId);
+                                    let layId = $(this).attr("lay-id");
+                                    -1 !== layId && _this.tabDelete(layId);
                                 })
                         }
                         tool.click()
                     })
                 });
+
                 _this.winResize();
 
                 // tips提示
-                $('.layui-tip').on('mouseenter', function () {
+                $('.layui-tip').on('mouseenter', function () {//mouseenter：当鼠标指针进入（穿过）元素时，出现提示：
                     layer.tips($(this).attr("layui-tips"), $(this), {
-                        time: 150000,
+                        time: 30000,
                         tips: 3
                     });
                 });
@@ -165,18 +176,17 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
 
                 // 扩展功能
                 $(".anspray-tool-body").find("li").each(function () {
-                    let action = $(this).data("action");
+                    debugger
+                    let actionButton = $(this).data("action");
                     $(this).off("click").on("click", function () {
-                        let id = _this._title.children("li[class=layui-this]").attr("lay-id");
-                        switch (action) {
+                        let thisLayId = _this._title.children("li[class=layui-this]").attr("lay-id");
+                        switch (actionButton) {
                             // 左侧菜单
-                            case "toleft":
-                                console.log("菜单收缩");
-                                break;
+                            case "toLeft":console.log("菜单收缩");break;
                             // 全屏
-                            case "fullscreen":
+                            case "fullScreen":
                                 // 全屏
-                                if (!$(this).hasClass("fullscreened")) {
+                                if (!$(this).hasClass("fullScreened")) {
                                     //打开全屏方法
                                     let requestMethod = document.documentElement.requestFullScreen || //W3C
                                         document.documentElement.webkitRequestFullScreen || //Chrome等
@@ -190,7 +200,7 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
                                             wscript.SendKeys("{F11}");
                                         }
                                     }
-                                    $(this).addClass("fullscreened");
+                                    $(this).addClass("fullScreened");
 
                                 } else {
                                     // 退出全屏方法
@@ -201,18 +211,17 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
                                     if (exitMethod) {
                                         exitMethod.call(document);
                                     } else if (typeof window.ActiveXObject !== "undefined") { //for Internet Explorer
-                                        var wscript = new ActiveXObject("WScript.Shell");
+                                        let wscript = new ActiveXObject("WScript.Shell");
                                         if (wscript !== null) {
                                             wscript.SendKeys("{F11}");
                                         }
                                     }
-                                    $(this).removeClass("fullscreened");
+                                    $(this).removeClass("fullScreened");
                                 }
                                 break;
                             // 锁屏
                             case "lockcms":
                                 lockPage();
-
                                 // 锁屏
                                 $(".lockcms").on("click", function () {
                                     window.sessionStorage.setItem("lockcms", "true");
@@ -260,8 +269,8 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
                                 break;
                             // 刷新
                             case "refresh":
-                                let p = _this._content.children("div[lay-item-id=" + id + "]").children("iframe");
-                                p.attr("src", p.attr("src"));
+                                let content = _this._content.children("div[lay-item-id=" + thisLayId + "]").children("iframe");
+                                content.attr("src", content.attr("src"));
                                 break;
                             // 二维码
                             case "qrcode":
@@ -283,6 +292,7 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
                                     }
                                 });
                                 break;
+                            //打印
                             case "print":
                                 let bdhtml = window.document.body.innerHTML;
                                 let sprnstr = "<!--startprint-->";
@@ -297,7 +307,7 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
                 })
             }
         },
-
+        //窗口大小调整
         winResize: function () {
             let _this = this;
             $window.on("resize", function () {
@@ -305,19 +315,23 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
                 $(".kit-tab .layui-tab-content iframe").height(height - 45)
             }).resize()
         },
-        tabExists: function (i) {
-            return this._title.find("li[lay-id=" + i + "]").length > 0
+        //判断是否有选项卡
+        tabExists: function (layId) {
+            return this._title.find("li[lay-id=" + layId + "]").length > 0
         },
-        tabDelete: function (i) {
-            element.tabDelete(this._filter, i)
+        //关闭选项卡 layId选项卡的唯一标识
+        tabDelete: function (layId) {
+            element.tabDelete(this._filter, layId)
         },
-        tabChange: function (i) {
-            element.tabChange(this._filter, i)
+        //layId选项卡的唯一标识
+        tabChange: function (layId) {
+            element.tabChange(this._filter, layId)
         },
-        getTab: function (i) {
-            return this._title.find("li[lay-id=" + i + "]")
+        getTab: function (layId) {
+            return this._title.find("li[lay-id=" + layId + "]")
         },
         tabAdd: function (option) {
+            debugger
             let _this = this,
                 config = _this._config,
                 tabObject = (option || {
@@ -375,7 +389,7 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
         })
     }
 
-    exports("tab", n)
+    exports("tab", new n);
 });
 
 
