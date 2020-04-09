@@ -1,7 +1,5 @@
 layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar', 'onelevel', 'ajaxMod', 'routerMod'], function (exports) {
     const $ = layui.jquery,
-        _win = $(window),
-        _doc = $(document),
         _body = $('.kit-body'),
         element = layui.element,
         layer = layui.layer,
@@ -23,15 +21,15 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
         },
         config: {
             type: 'iframe',
-            // 设置是否刷新
-            isRefresh: false
+            isRefresh: false // 设置是否刷新
         },
+        //设置是否刷新和页面类型（内嵌页面和新页面）
         set: function (options) {
-            debugger
-            let that = this;
-            $.extend(true, that.config, options);/* $.extend(object1, object2); object2 合并到 object1 中 */
-            return that;
+            let _this = this;
+            $.extend(true, _this.config, options);/* $.extend(object1, object2); object2 合并到 object1 中 */
+            return _this;
         },
+        //初始化
         init: function () {
             debugger
             let that = this,
@@ -70,11 +68,13 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
                     }
                 });
             }
-
+            //页面类型为内嵌页面
             if (_config.type === 'iframe') {
+                debugger
                 tab.set({
                     elem: '#container',
                     onSwitch: function (data) {
+                        debugger
                         if (that.config.isRefresh) {
                             let src = $(".layui-tab-content").find(".layui-show iframe").attr("src");
                             $(".layui-tab-content").find(".layui-show iframe").attr("src", src);

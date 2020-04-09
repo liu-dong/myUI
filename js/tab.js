@@ -1,25 +1,23 @@
 layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
 
-    const t = layui.jquery,
-        $ = layui.jquery,
-        e = layui.element,
+    const $ = layui.jquery,
+        element = layui.element,
         layer = layui.layer,
-        a = $(document),//$(document)是一个选择器，选中的是整个html所有元素的集合。（html对象）
-        l = $(window),//$(window)是一个选择器，选中的是整个浏览器所有元素的集合。（浏览器对象）
         $document = $(document),//$(document)是一个选择器，选中的是整个html所有元素的集合。（html对象）
         $window = $(window);//$(window)是一个选择器，选中的是整个浏览器所有元素的集合。（浏览器对象）
     let n = function () {
         this.config = {
-            elem: void 0,//void是javascript中的一个函数，接受一个参数，返回值永远是undefined
-            mainUrl: "main.html"
+            elem: void 0,//事件对象
+            mainUrl: "main.html"//tab页地址
         };
         this.v = "1.0.2"
     };
 
-    //n.fn：设置这个方法为所有实例共有的，n.prototype.set：给自定义方法扩展一个方法set()
+    //设置tab页参数值
     n.fn = n.prototype.set = function (params) {
         let _this = this;
-        t.extend(true, _this.config, params);
+        $.extend(true, _this.config, params);
+        debugger
         return _this;
     };
     n.fn.render = function () {
@@ -27,19 +25,19 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
             _config = _this.config;
         //layui.hint():向控制台打印一些异常信息，目前只返回了 error 方法：layui.hint().error('出错啦')
         if (_config.elem) {
-            c._config = _config;
-            c.createTabDom();
+            obj._config = _config;
+            obj.createTabDom();
         } else {
             layui.hint().error("Tab error:请配置选择卡容器.");
         }
         return _this;
     };
     n.fn.tabAdd = function (params) {
-        c.tabAdd(params)
+        obj.tabAdd(params)
     };
 
 
-    let c = {
+    let obj = {
         _config: {},
         _filter: "kitTab",
         _title: void 0,
@@ -145,7 +143,7 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
                                 break;
                             case "closeAll":
                                 _this._title.children("li[lay-id]").each(function () {
-                                    let _layId = t(this).attr("lay-id");
+                                    let _layId = $(this).attr("lay-id");
                                     -1 !== _layId && i.tabDelete(_layId);
                                 })
                         }
@@ -178,27 +176,28 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
                             // 全屏
                             case "fullscreen":
                                 // 全屏
-                                if (!t(this).hasClass("fullscreened")) {
-                                    element = document.documentElement;
-                                    var requestMethod = element.requestFullScreen || //W3C
-                                        element.webkitRequestFullScreen || //Chrome等
-                                        element.mozRequestFullScreen || //FireFox
-                                        element.msRequestFullScreen; //IE11
+                                if (!$(this).hasClass("fullscreened")) {
+                                    //打开全屏方法
+                                    let requestMethod = document.documentElement.requestFullScreen || //W3C
+                                        document.documentElement.webkitRequestFullScreen || //Chrome等
+                                        document.documentElement.mozRequestFullScreen || //FireFox
+                                        document.documentElement.msRequestFullScreen; //IE11
                                     if (requestMethod) {
-                                        requestMethod.call(element);
+                                        requestMethod.call(document.documentElement);
                                     } else if (typeof window.ActiveXObject !== "undefined") { //for Internet Explorer
-                                        var wscript = new ActiveXObject("WScript.Shell");
+                                        let wscript = new ActiveXObject("WScript.Shell");
                                         if (wscript !== null) {
                                             wscript.SendKeys("{F11}");
                                         }
                                     }
-                                    t(this).addClass("fullscreened");
-                                    // 退出全屏
+                                    $(this).addClass("fullscreened");
+
                                 } else {
-                                    var exitMethod = document.exitFullscreen || //W3C
-                                        document.mozCancelFullScreen || //Chrome等
-                                        document.webkitExitFullscreen || //FireFox
-                                        document.webkitExitFullscreen; //IE11
+                                    // 退出全屏方法
+                                    let exitMethod = document.exitFullscreen || //W3C
+                                        document.webkitExitFullScreen || //Chrome等
+                                        document.mozCancleFullScreen || //FireFox
+                                        document.msExitFullScreen; //IE11
                                     if (exitMethod) {
                                         exitMethod.call(document);
                                     } else if (typeof window.ActiveXObject !== "undefined") { //for Internet Explorer
@@ -207,38 +206,29 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
                                             wscript.SendKeys("{F11}");
                                         }
                                     }
-                                    t(this).removeClass("fullscreened");
+                                    $(this).removeClass("fullscreened");
                                 }
                                 break;
                             // 锁屏
                             case "lockcms":
+                                lockPage();
 
                                 // 锁屏
-                            function lockPage() {
-                                layer.open({
-                                    title: false,
-                                    type: 1,
-                                    content: t("#lock-box"),
-                                    closeBtn: 0,
-                                    shade: 0.8
-                                })
-                            }
-
-                                t(".lockcms").on("click", function () {
-                                    window.sessionStorage.setItem("lockcms", true);
+                                $(".lockcms").on("click", function () {
+                                    window.sessionStorage.setItem("lockcms", "true");
                                     lockPage();
-                                })
-                                if (window.sessionStorage.getItem("lockcms") == "true") {
+                                });
+                                if (window.sessionStorage.getItem("lockcms") === "true") {
                                     lockPage();
                                 }
-                                t("#unlock").on("click", function () {
-                                    if (t(this).siblings(".admin-header-lock-input").val() == '') {
+                                $("#unlock").on("click", function () {
+                                    if ($(this).siblings(".admin-header-lock-input").val() === '') {
                                         // layer.msg("请输入解锁密码！");
                                         layer.msg("请输入登录账号解锁！");
                                     } else {
-                                        if (t(this).siblings(".admin-header-lock-input").val() == "123456") {
-                                            window.sessionStorage.setItem("lockcms", false);
-                                            t(this).siblings(".admin-header-lock-input").val('');
+                                        if ($(this).siblings(".admin-header-lock-input").val() === "123456") {
+                                            window.sessionStorage.setItem("lockcms", "false");
+                                            $(this).siblings(".admin-header-lock-input").val('');
                                             layer.closeAll("page");
                                         } else {
                                             layer.msg("账号错误，请重新输入!");
@@ -249,19 +239,19 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
                             // 清缓存
                             case "clearcache":
                                 // 缓存
-                                t('#clear').on('click', function () {
-                                    var the = t(this).find('i');
+                                $('#clear').on('click', function () {
+                                    let the = $(this).find('i');
                                     the.attr("class", "fa fa-spinner");
-                                    t.ajax({
+                                    $.ajax({
                                         url: "http://tplay.pengyichen.cn/tplay/public/admin/common/clear.shtml"
                                         , success: function (res) {
-                                            if (res.code == 1) {
+                                            if (res.code === 1) {
                                                 setTimeout(function () {
                                                     parent.message.show({
                                                         skin: 'cyan',
                                                         msg: res.msg
                                                     });
-                                                    t('#clear i').attr("class", "fa fa-institution");
+                                                    $("#clear i").attr("class", "fa fa-institution");
                                                 }, 1000)
                                             }
                                         }
@@ -270,36 +260,34 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
                                 break;
                             // 刷新
                             case "refresh":
-                                var p = i._content.children("div[lay-item-id=" + id + "]").children("iframe");
+                                let p = _this._content.children("div[lay-item-id=" + id + "]").children("iframe");
                                 p.attr("src", p.attr("src"));
                                 break;
                             // 二维码
                             case "qrcode":
                                 layer.open({
-                                    type: 1
-                                    ,
-                                    id: 'qrcode'
-                                    ,
-                                    offset: ['95px', 'calc(100% - 212px)']
-                                    ,
-                                    content: '<div style=""><img width="200" id="qrimage" src="//qr.api.cli.im/qr?data=f%2527d%2527s%2527f&amp;level=H&amp;transparent=false&amp;bgcolor=%23ffffff&amp;forecolor=%23000000&amp;blockpixel=12&amp;marginblock=1&amp;logourl=&amp;size=280&amp;kid=cliim&amp;key=fb2f780c52f16355e4e8222c035bdc4e"></div>'
-                                    ,
-                                    title: '二维码'
-                                    ,
-                                    btnAlign: 'c' //按钮居中
-                                    ,
-                                    shade: 0 //不显示遮罩
-                                    ,
+                                    type: 1,
+                                    id: 'qrcode',
+                                    offset: ['95px', 'calc(100% - 212px)'],
+                                    content: '<div style="">' +
+                                        '<img width="200" id="qrimage" ' +
+                                        'src="//qr.api.cli.im/qr?data=f%2527d%2527s%2527f&amp;' +
+                                        'level=H&amp;transparent=false&amp;bgcolor=%23ffffff&amp;forecolor=%23000000&amp;' +
+                                        'blockpixel=12&amp;marginblock=1&amp;logourl=&amp;size=280&amp;kid=cliim&amp;' +
+                                        'key=fb2f780c52f16355e4e8222c035bdc4e"></div>',
+                                    title: '二维码',
+                                    btnAlign: 'c',//按钮居中
+                                    shade: 0,//不显示遮罩
                                     yes: function () {
                                         layer.closeAll();
                                     }
                                 });
                                 break;
                             case "print":
-                                bdhtml = window.document.body.innerHTML;
-                                sprnstr = "<!--startprint-->";
-                                eprnstr = "<!--endprint-->";
-                                prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr) + 17);
+                                let bdhtml = window.document.body.innerHTML;
+                                let sprnstr = "<!--startprint-->";
+                                let eprnstr = "<!--endprint-->";
+                                let prnhtml = bdhtml.substr(bdhtml.indexOf(sprnstr) + 17);
                                 prnhtml = prnhtml.substring(0, prnhtml.indexOf(eprnstr));
                                 window.document.body.innerHTML = prnhtml;
                                 window.print();
@@ -311,56 +299,81 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
         },
 
         winResize: function () {
-            var i = this;
-            l.on("resize", function () {
-                var e = t(i._parentElem).height();
-                t(".kit-tab .layui-tab-content iframe").height(e - 45)
+            let _this = this;
+            $window.on("resize", function () {
+                let height = $(_this._parentElem).height();
+                $(".kit-tab .layui-tab-content iframe").height(height - 45)
             }).resize()
         },
         tabExists: function (i) {
             return this._title.find("li[lay-id=" + i + "]").length > 0
         },
         tabDelete: function (i) {
-            e.tabDelete(this._filter, i)
+            element.tabDelete(this._filter, i)
         },
         tabChange: function (i) {
-            e.tabChange(this._filter, i)
+            element.tabChange(this._filter, i)
         },
         getTab: function (i) {
             return this._title.find("li[lay-id=" + i + "]")
         },
-        tabAdd: function (i) {
-            var t = this,
-                a = t._config,
-                l = (i = i || {
+        tabAdd: function (option) {
+            let _this = this,
+                config = _this._config,
+                tabObject = (option || {
                     id: (new Date).getTime(),
                     title: "新标签页",
                     icon: "fa-file",
                     url: "404.html"
                 }).title,
-                n = i.icon,
-                c = i.url,
-                s = i.id;
-            if (t.tabExists(s)) t.tabChange(s);
-            else {
+                icon = option.icon,
+                url = option.url,
+                tabId = option.id;
+            if (_this.tabExists(tabId)) {
+                _this.tabChange(tabId);
+            } else {
                 NProgress.start();
-                var r = ['<li class="layui-this" lay-id="' + s + '" >'];
-                -1 !== n.indexOf("fa-") ? r.push('<i class="fa ' + n + '" aria-hidden="true"></i>') : r.push('<i class="layui-icon">' + n + "</i>"), r.push("&nbsp;" + l), r.push('<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i>'), r.push("</li>");
-                var o = '<div class="layui-tab-item layui-show" lay-item-id="' + s + '"><iframe src="' + c + '"></iframe></div>';
-                t._title.append(r.join("")), t._content.append(o), t.getTab(s).find("i.layui-tab-close").off("click").on("click", function () {
-                    a.closeBefore ? a.closeBefore(i) && t.tabDelete(s) : t.tabDelete(s)
-                }), t.tabChange(s), t.winResize(), t._content.find("div[lay-item-id=" + s + "]").find("iframe").on("load", function () {
+                let liTag = ['<li class="layui-this" lay-id="' + tabId + '" >'];
+                if (-1 !== icon.indexOf("fa-")) {
+                    liTag.push('<i class="fa ' + icon + '" aria-hidden="true"></i>')
+                } else {
+                    liTag.push('<i class="layui-icon">' + icon + "</i>");
+                    liTag.push("&nbsp;" + tabObject);
+                    liTag.push('<i class="layui-icon layui-unselect layui-tab-close">&#x1006;</i>');
+                    liTag.push("</li>");
+                }
+                let divTag = '<div class="layui-tab-item layui-show" lay-item-id="' + tabId + '"><iframe src="' + url + '"></iframe></div>';
+                _this._title.append(liTag.join(""));
+                _this._content.append(divTag);
+                _this.getTab(tabId).find("i.layui-tab-close").off("click").on("click", function () {
+                    config.closeBefore ? config.closeBefore(option) && _this.tabDelete(tabId) : _this.tabDelete(tabId)
+                });
+                _this.tabChange(tabId);
+                _this.winResize();
+                _this._content.find("div[lay-item-id=" + tabId + "]").find("iframe").on("load", function () {
                     NProgress.done()
-                }), a.onSwitch && e.on("tab(" + t._filter + ")", function (i) {
-                    a.onSwitch({
+                });
+                config.onSwitch && element.on("tab(" + _this._filter + ")", function (i) {
+                    config.onSwitch({
                         index: i.index,
                         elem: i.elem,
-                        layId: t._title.children("li").eq(i.index).attr("lay-id")
+                        layId: _this._title.children("li").eq(i.index).attr("lay-id")
                     })
                 })
             }
         }
     };
+
+    //锁屏
+    function lockPage() {
+        layer.open({
+            title: false,
+            type: 1,
+            content: $("#lock-box"),
+            closeBtn: 0,
+            shade: 0.8
+        })
+    }
 
     exports("tab", n)
 });

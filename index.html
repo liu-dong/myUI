@@ -155,9 +155,8 @@
             // 将message设置为全局以便子页面调用
             message = layui.message;
         //主入口
-        app.set({
+        app.set({// 设置为刷新，打开页面类型为内嵌页面
             type: 'iframe',
-            // 设置切换是否刷新
             isRefresh: true
         }).init();//等于app.set();app.init();
 
