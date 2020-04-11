@@ -91,6 +91,7 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
                     {
                         url: "/data/menuList.json", data: "", success: function (res) {
                             if (res.success) {
+                                debugger
                                 if (res.data.length !== 0) {
                                     navbar.set({
                                         data: res.data
