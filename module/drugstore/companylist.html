@@ -129,7 +129,7 @@
                 // 目前调用的是线上接口，记的配置nginx反向代理
                 table.render({
                     elem: '#layui-table',
-                    url: 'http://localhost:8081/api/system/systemMenu/findSystemMenuList',
+                    url: '/api/system/systemMenu/findSystemMenuList',
                     page: true,
                     limit: 10,
                     limits: [10, 15, 20, 25, 30],
@@ -144,12 +144,12 @@
                         msgName: 'message',
                     },
                     cols: [[
-                        // {field: 'id', title: 'ID', width: '15%',},
                         {field: 'menuName', title: '名称', width: '15%',},
                         {field: 'menuLevel', title: '菜单级别', width: '15%',},
-                        {field: 'menuUrl', title: '地址', width: '15%',},
-                        {field: 'menuPath', title: '路径', width: '15%',},
-                        {field: 'menuStatus', title: '状态', width: '15%',},
+                        {field: 'menuIcon', title: '图标', width: '15%',},
+                        {field: 'menuUrl', title: '地址', width: '20%',},
+                        {field: 'menuPath', title: '路径', width: '20%',},
+                        {field: 'menuStatus', title: '状态', width: '5%',},
                         {fixed: 'right', title: '操作', width: '10%', align: 'center', toolbar: '#barAction'}
                     ]],
                     done: function (res, curr, count) {
