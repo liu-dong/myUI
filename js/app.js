@@ -89,7 +89,7 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
                 // 获取权限列表
                 ajaxMod.layuiGet(
                     {
-                        url: "/data/menuList.json", data: "", success: function (res) {
+                        url: "/api/system/systemMenu/getSystemMenuTree", data: {"type":2}, success: function (res) {
                             if (res.success) {
                                 debugger
                                 if (res.data.length !== 0) {
