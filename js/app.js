@@ -89,8 +89,7 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
                 // 获取权限列表
                 ajaxMod.layuiGet(
                     {
-                        url: "/system/systemMenu/findSystemMenuList", data: "", success: function (res) {
-                            debugger
+                        url: "/api/system/systemMenu/getSystemMenuTree", data: {"type":2}, success: function (res) {
                             if (res.success) {
                                 debugger
                                 if (res.data.length !== 0) {
@@ -104,7 +103,7 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
                                 layer.msg("获取用户权限列表失败,推荐联系管理员", {icon: 2});
                             }
                         }
-                    }, 0
+                    }, 1
                 )
             }
             return that;
