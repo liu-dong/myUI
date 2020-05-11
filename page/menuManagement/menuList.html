@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>菜单列表</title>
-    <link rel="stylesheet" href="/plugins/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="/plugins/layui-v2.4.5/css/layui.css" media="all">
     <link rel="stylesheet" href="/css/common.css">
-    <script src="/plugins/layui/layui.js"></script>
+    <script src="/plugins/layui-v2.4.5/layui.js"></script>
     <script src="/plugins/vue.min.js"></script>
     <script src="/js/common.js"></script>
     <style>
@@ -30,10 +30,10 @@
             <div class="layui-form-item">
                 <div class="layui-row">
                     <div class="layui-inline">
-                        <label class="layui-form-mid">菜单名称：</label>
+                        <label class="layui-form-mid" for="menuName">菜单名称：</label>
                         <div class="layui-input-inline iframe-select">
                             <div class="layui-input-inline">
-                                <input type="text" v-model="menuName" class="layui-input">
+                                <input type="text" id="menuName" v-model="menuName" class="layui-input">
                             </div>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
             selected: '1',
         },
         created() {
-            layui.use(['jquery', 'layer', 'table', 'laydate', 'upload', 'form', 'ajaxMod'], function () {
+            layui.use(['jquery', 'layer', 'table', 'form', 'ajaxMod'], function () {
 
                 const $ = layui.jquery,
                     table = layui.table,
@@ -73,20 +73,40 @@
 
                 // 目前调用的是线上接口，记的配置nginx反向代理
                 table.render({
+                    id: 'tableReload',
                     elem: '#menuInfoList',
                     url: '/api/system/systemMenu/findSystemMenuList',
-                    page: true,
-                    limit: 10,
-                    limits: [10, 15, 20, 25, 30],
-                    height: 'full-140',
-                    id: 'tableReload',
-                    loading: true,
                     method: 'post',
+                    page: true,
+                    // limit: 50,
+                    // limits: [10, 15, 20, 25, 30],
+                    /*page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                        layout: ['first', 'prev', 'page', 'next','last','limit', 'count', 'skip'], //自定义分页布局
+                        limit: 10,
+                        limits: [10, 20, 30, 40, 50],
+                        prev: '上一页',
+                        next: '下一页',
+                        groups: 5, //只显示 5 个连续页码
+                        skip: true,
+                        first: '首页', //不显示首页
+                        last: '尾页'//不显示尾页
+                    },*/
+                    height: 'full-140',
+                    loading: true,
                     // where: {token: cookie.get('userToken')},
-                    request: {},
+                    parseData: function(res) { //res 即为原始返回的数据
+                        debugger
+                        return {
+                            "code": res.code, //解析接口状态
+                            "msg": res.message, //解析提示文本
+                            "count": res.total, //解析数据长度
+                            "data": res.data //解析数据列表
+                        };
+                    },
                     response: {
-                        statusCode: 200,
+                        statusCode: 200,//规定成功的状态码为 200
                         msgName: 'message',
+                        countName: 'total'
                     },
                     cols: [[
                         {field: 'menuName', title: '名称', width: '15%',},
@@ -95,7 +115,11 @@
                         {field: 'menuUrl', title: '地址', width: '20%',},
                         {field: 'menuPath', title: '路径', width: '20%',},
                         {field: 'menuStatus', title: '状态', width: '5%',},
-                        {fixed: 'right', title: '操作', width: '10%', align: 'center', toolbar: '#barAction'}
+                        {fixed: 'right', title: '操作', width: '10%', align: 'center',
+                            templet: function (d) {
+                                return "<a href='menuList.html'>查看</a>";
+                            }
+                        }
                     ]],
                     done: function (res, curr, count) {
                         console.log(res);
