@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>菜单编辑页</title>
+    <link rel="stylesheet" href="/plugins/layui-v2.4.5/css/layui.css" media="all">
+    <link rel="stylesheet" href="/css/common.css">
+    <script src="/plugins/layui-v2.4.5/layui.js"></script>
+    <script src="/plugins/vue.min.js"></script>
+    <script src="/js/common.js"></script>
+</head>
+<body>
+<div class="layui-container" id="form-page">
+    <form class="layui-form" action="" lay-filter="example" style="margin-top: 20px;">
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="menuName">菜单名称</label>
+            <div class="layui-input-block">
+                <input id="menuName" v-model="menu.menuName" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="menuLevel">菜单级别</label>
+            <div class="layui-input-block">
+                <input id="menuLevel" v-model="menu.menuLevel" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="menuIcon">图标</label>
+            <div class="layui-input-block">
+                <input id="menuIcon" v-model="menu.menuIcon" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="menuStatus">状态</label>
+            <div class="layui-input-block">
+                <input id="menuStatus" v-model="menu.menuStatus" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="hasChild">是否有子菜单</label>
+            <div class="layui-input-block">
+                <label for="have">有</label>
+                <input type="radio" id="have" v-model="menu.hasChild" value="1" class="layui-input">
+                <label for="notHave">无</label>
+                <input type="radio" id="notHave" v-model="menu.hasChild" value="0" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="menuUrl">地址</label>
+            <div class="layui-input-block">
+                <input id="menuUrl" v-model="menu.menuUrl" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-normal" @click="save">保存</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+<script type="text/javascript">
+
+    layui.use(['jquery'], function () {
+
+        const $ = layui.jquery;
+
+        let vm = new Vue({
+            el: '#form-page',
+            data: {
+                menu: {
+                    hasChild:0
+                }
+            },
+            methods: {
+                save: function () {
+                    let url = "/api/system/systemMenu/saveSystemMenuInfo";
+                    let data = this.menu;
+                    debugger
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        data: data,
+                        success: function (data) {
+                            alert(data.message);
+                            let index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);//关闭当前页
+                            console.log(data);
+                        },
+                        error: function (data) {
+                            console.log(data);
+                            let index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);//关闭当前页
+                        }
+                    });
+                }
+            }
+        })
+    })
+</script>
+</html>
