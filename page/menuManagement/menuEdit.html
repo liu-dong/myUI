@@ -37,6 +37,15 @@
             </div>
         </div>
         <div class="layui-form-item">
+            <label class="layui-form-label" for="hasChild">是否有子菜单</label>
+            <div class="layui-input-block">
+                <label for="have">有</label>
+                <input type="radio" id="have" v-model="menu.hasChild" value="1" class="layui-input">
+                <label for="notHave">无</label>
+                <input type="radio" id="notHave" v-model="menu.hasChild" value="0" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label" for="menuUrl">地址</label>
             <div class="layui-input-block">
                 <input id="menuUrl" v-model="menu.menuUrl" class="layui-input">
@@ -59,7 +68,9 @@
         let vm = new Vue({
             el: '#form-page',
             data: {
-                menu: {}
+                menu: {
+                    hasChild:0
+                }
             },
             methods: {
                 save: function () {
@@ -69,7 +80,6 @@
                     $.ajax({
                         url: url,
                         type: "POST",
-                        // contentType: "application/json;charset=UTF-8",
                         data: data,
                         success: function (data) {
                             alert(data.message);
@@ -77,9 +87,10 @@
                             parent.layer.close(index);//关闭当前页
                             console.log(data);
                         },
-                        error: function () {
-                            alert(data.message);
-                            layer.msg(data.message);
+                        error: function (data) {
+                            console.log(data);
+                            let index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);//关闭当前页
                         }
                     });
                 }
