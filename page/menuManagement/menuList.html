@@ -85,7 +85,6 @@
         // 按钮事件
         $("#menuList .layui-btn").on('click', function () {
             let type = $(this).data('button');
-            console.log(active[type]);
             active[type] ? active[type].call(this) : '';
         });
 
@@ -101,7 +100,7 @@
                     skin: 'demo-class',
                     shade: 0.3,
                     shadeClose: true,
-                    area: ['800px', '650px'],
+                    area: ['500px', '400px'],
                     offset: '50px',
                     move: false,
                     success: function (layero, index) {
@@ -122,8 +121,8 @@
                 table.reload('tableReload', {
                     page: {
                         curr: 1
-                    }
-                    , where: unserialize(decodeURIComponent($("#query-form").serialize(), true))
+                    },
+                    where: unserialize(decodeURIComponent($("#query-form").serialize(), true))
                 });
             },
         };

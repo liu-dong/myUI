@@ -11,88 +11,80 @@
 </head>
 <body>
 <div class="layui-container" id="form-page">
-    <div class="layui-row">
-        <div class="layui-col-md-offset2 layui-col-md8">
-            <div class="layui-form" id="login-form">
-                <form class="layui-form" action="" method="post" enctype="multiple/form-data">
-                    <div class="layui-form-item">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">姓名</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">身份证号</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="identityCard" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">性别</label>
-                            <div class="layui-input-inline">
-                                <input type="radio" name="sex" value="0" title="男" checked="checked" class="layui-input">
-                                <input type="radio" name="sex" value="1" title="女" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">籍贯</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="nativePlace" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">出生日期</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="birthdate" id="birthdate" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">年龄</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="age" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">手机</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="phone" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">邮箱</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="email" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">现住址</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="presentAddress" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item layui-form-text">
-                        <label class="layui-form-label">个人简介</label>
-                        <div class="layui-input-block">
-                            <textarea name="individualResume" class="layui-textarea"></textarea>
-                        </div>
-                    </div>
-                    <div class="layui-form-item" align="center">
-                        <button type="button" class="layui-btn" onclick="saveInfo()">保存</button>
-                        <!--<button class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>-->
-                        <button type="button" onclick="javascript:history.go(-1);" class="layui-btn">返回</button>
-                    </div>
-                </form>
+    <form class="layui-form" action="" lay-filter="example" style="margin-top: 20px;">
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="menuName">菜单名称</label>
+            <div class="layui-input-block">
+                <input id="menuName" v-model="menu.menuName" class="layui-input">
             </div>
         </div>
-    </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="menuLevel">菜单级别</label>
+            <div class="layui-input-block">
+                <input id="menuLevel" v-model="menu.menuLevel" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="menuIcon">图标</label>
+            <div class="layui-input-block">
+                <input id="menuIcon" v-model="menu.menuIcon" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="menuStatus">状态</label>
+            <div class="layui-input-block">
+                <input id="menuStatus" v-model="menu.menuStatus" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" for="menuUrl">地址</label>
+            <div class="layui-input-block">
+                <input id="menuUrl" v-model="menu.menuUrl" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-normal" @click="save">保存</button>
+            </div>
+        </div>
+    </form>
 </div>
 </body>
+<script type="text/javascript">
+
+    layui.use(['jquery'], function () {
+
+        const $ = layui.jquery;
+
+        let vm = new Vue({
+            el: '#form-page',
+            data: {
+                menu: {}
+            },
+            methods: {
+                save: function () {
+                    let url = "/api/system/systemMenu/saveSystemMenuInfo";
+                    let data = this.menu;
+                    debugger
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        // contentType: "application/json;charset=UTF-8",
+                        data: data,
+                        success: function (data) {
+                            alert(data.message);
+                            let index = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(index);//关闭当前页
+                            console.log(data);
+                        },
+                        error: function () {
+                            alert(data.message);
+                            layer.msg(data.message);
+                        }
+                    });
+                }
+            }
+        })
+    })
+</script>
 </html>
