@@ -94,19 +94,19 @@
                     height: 'full-140',
                     loading: true,
                     // where: {token: cookie.get('userToken')},
+                    response: {
+                        statusCode: 200,//规定成功的状态码为 200
+                        msgName: 'message',
+                        countName: 'total'
+                    },
                     parseData: function(res) { //res 即为原始返回的数据
                         debugger
                         return {
                             "code": res.code, //解析接口状态
                             "msg": res.message, //解析提示文本
-                            "count": res.total, //解析数据长度
+                            "total": res.total, //解析数据长度
                             "data": res.data //解析数据列表
                         };
-                    },
-                    response: {
-                        statusCode: 200,//规定成功的状态码为 200
-                        msgName: 'message',
-                        countName: 'total'
                     },
                     cols: [[
                         {field: 'menuName', title: '名称', width: '15%',},
