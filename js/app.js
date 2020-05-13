@@ -1,4 +1,4 @@
-layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar', 'onelevel', 'ajaxMod', 'routerMod'], function (exports) {
+layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'menuTree', 'onelevel', 'ajaxMod', 'routerMod'], function (exports) {
     const $ = layui.jquery,
         _body = $('.kit-body'),
         element = layui.element,
@@ -7,7 +7,7 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
         table = layui.table,
         tab = layui.tab,
         loader = layui.loader,
-        navbar = layui.navbar,
+        menuTree = layui.menuTree,
         ajaxMod = layui.ajaxMod,
         routerMod = layui.routerMod,
         _componentPath = 'components/';
@@ -89,11 +89,13 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
                 // 获取权限列表
                 ajaxMod.layuiGet(
                     {
-                        url: "/api/system/systemMenu/getSystemMenuTree", data: {"type":2}, success: function (res) {
+                        url: "/api/system/systemMenu/getSystemMenuTree",
+                        data: {"type":2},
+                        success: function (res) {
                             if (res.success) {
                                 debugger
                                 if (res.data.length !== 0) {
-                                    navbar.set({
+                                    menuTree.set({
                                         data: res.data
                                     }).render(function (data) {
                                         tab.tabAdd(data);
@@ -116,7 +118,7 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'navbar'
             url: "/data/menuList2.json", data: "", success: function (res) {
                 if (res.success) {
                     if (res.data.length !== 0) {
-                        navbar.set({
+                        menuTree.set({
                             data: res.data
                         }).render(function (data) {
                             tab.tabAdd(data);

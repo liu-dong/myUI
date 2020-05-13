@@ -4,7 +4,8 @@ layui.define(["layer", "laytpl", "element"], function (exports) {
         $document = $(document),
         laytpl = layui.laytpl,
         element = layui.element;
-    const navbar = {
+
+    const menuTree = {
         v: "1.0.2",
         config: {
             data: void 0,
@@ -128,5 +129,5 @@ layui.define(["layer", "laytpl", "element"], function (exports) {
         }
     };
 
-    exports('navbar', navbar);
+    exports('menuTree', menuTree);
 });

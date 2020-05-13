@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="layui-container" id="form-page">
-    <form class="layui-form" action="" lay-filter="example" style="margin-top: 20px;">
+    <form action="" lay-filter="example" style="margin-top: 20px;">
         <div class="layui-form-item">
             <label class="layui-form-label" for="menuName">菜单名称</label>
             <div class="layui-input-block">
@@ -31,18 +31,27 @@
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label" for="menuStatus">状态</label>
+            <label class="layui-form-label" for="menuOrder">排序</label>
             <div class="layui-input-block">
-                <input id="menuStatus" v-model="menu.menuStatus" class="layui-input">
+                <input id="menuOrder" v-model="menu.menuOrder" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label" for="hasChild">是否有子菜单</label>
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <label for="using">启用</label>
+                <input type="radio" id="using" v-model="menu.menuStatus" value="1" class="layui-form-radio">
+                <label for="forbidden">禁用</label>
+                <input type="radio" id="forbidden" v-model="menu.menuStatus" value="0" class="layui-form-radio">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否有子菜单</label>
             <div class="layui-input-block">
                 <label for="have">有</label>
-                <input type="radio" id="have" v-model="menu.hasChild" value="1" class="layui-input">
+                <input type="radio" id="have" v-model="menu.hasChild" value="1" class="layui-form-radio">
                 <label for="notHave">无</label>
-                <input type="radio" id="notHave" v-model="menu.hasChild" value="0" class="layui-input">
+                <input type="radio" id="notHave" v-model="menu.hasChild" value="0" class="layui-form-radio">
             </div>
         </div>
         <div class="layui-form-item">
