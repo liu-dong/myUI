@@ -12,9 +12,11 @@ layui.define(["layer", "laytpl", "element"], function (exports) {
             remote: {url: "", type: "GET", jsonp: false},
             cached: !1,
             elem: void 0,
-            filter: "kitNavbar"
+            filter: "menuTree" //菜单树
         },
+        /*基本设置*/
         set: function (options) {
+
             let _this = this;
             _this.config.data = void 0;
             $.extend(true, _this.config, options);

@@ -1,27 +1,26 @@
-layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
+layui.define(function (exports) {
 
     const $ = layui.jquery,
         element = layui.element,
         layer = layui.layer,
         $document = $(document),//$(document)是一个选择器，选中的是整个html所有元素的集合。（html对象）
         $window = $(window);//$(window)是一个选择器，选中的是整个浏览器所有元素的集合。（浏览器对象）
-    let n = function () {
+
+    let tab = function () {
         this.config = {
             elem: void 0,//事件对象
-            mainUrl: "main.html"//tab页地址
+            mainUrl: "main.html"//tab标签页地址
         };
         this.v = "1.0.2"
     };
 
     //设置tab页参数值
-    (n.fn = n.prototype).set = function (params) {
+    (tab.fn = tab.prototype).set = function (params) {
         let _this = this;
         $.extend(true, _this.config, params);
-        debugger
         return _this;
     };
-    n.fn.render = function () {
-        debugger
+    tab.fn.render = function () {
         let _this = this,
             _config = _this.config;
         //layui.hint():向控制台打印一些异常信息，目前只返回了 error 方法：layui.hint().error('出错啦')
@@ -33,8 +32,8 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
         }
         return _this;
     };
-    n.fn.tabAdd = function (params) {
-        debugger
+
+    tab.fn.tabAdd = function (params) {
         obj.tabAdd(params)
     };
 
@@ -58,7 +57,6 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
         },
         //创建标签栏
         createTabDom: function () {
-            debugger
             let _this = this;
             let config = _this._config;
             _this._parentElem = config.elem;
@@ -176,7 +174,7 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
 
                 // 扩展功能
                 $(".anspray-tool-body").find("li").each(function () {
-                    debugger
+
                     let actionButton = $(this).data("action");
                     $(this).off("click").on("click", function () {
                         let thisLayId = _this._title.children("li[class=layui-this]").attr("lay-id");
@@ -331,7 +329,7 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
             return this._title.find("li[lay-id=" + layId + "]")
         },
         tabAdd: function (option) {
-            debugger
+
             let _this = this,
                 config = _this._config,
                 tabObject = (option || {
@@ -389,7 +387,7 @@ layui.define(["jquery", "element", "nprogress", "layer"], function (exports) {
         })
     }
 
-    exports("tab", new n);
+    exports("tab", new tab);
 });
 
 

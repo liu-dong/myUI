@@ -156,7 +156,7 @@
         form.verify(verifyMod);
         //监听提交
         form.on('submit(form-login)', function (data) {
-            debugger
+
             ajaxMod.layuiGet(
                 {
                     url: "/login", data: data.field, success: function (res) {

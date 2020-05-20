@@ -31,7 +31,6 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'menuTre
         },
         //初始化
         init: function () {
-            debugger
             let that = this,
                 _config = that.config;
             if (_config.type === 'page') {
@@ -70,11 +69,9 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'menuTre
             }
             //页面类型为内嵌页面
             if (_config.type === 'iframe') {
-                debugger
                 tab.set({
-                    elem: '#container',
+                    elem: '#container',//主体内容区域
                     onSwitch: function (data) {
-                        debugger
                         if (that.config.isRefresh) {
                             let src = $(".layui-tab-content").find(".layui-show iframe").attr("src");
                             $(".layui-tab-content").find(".layui-show iframe").attr("src", src);
@@ -93,7 +90,7 @@ layui.define(['element', 'nprogress', 'form', 'table', 'loader', 'tab', 'menuTre
                         data: {"type":2},
                         success: function (res) {
                             if (res.success) {
-                                debugger
+
                                 if (res.data.length !== 0) {
                                     menuTree.set({
                                         data: res.data
