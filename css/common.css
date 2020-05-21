@@ -169,7 +169,12 @@ select.lay-ignore option {
 	color: red;
 }
 
-
+.layui-table-body {
+	position: relative;
+	overflow: auto;
+	margin-right: -1px;
+	margin-bottom: -1px;
+}
 
 
 
