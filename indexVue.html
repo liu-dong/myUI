@@ -59,6 +59,7 @@
     </div>
     <div v-else>
         <button type="button" v-on:click="login">登录</button>
+        <button type="button" v-on:click="upload">上传</button>
     </div>
 </div>
 
@@ -92,6 +93,11 @@
         },
         methods: {
             login: function () {
+                debugger
+                this.loginInfo = true;
+                console.log(this.loginInfo);
+            },
+            upload: function () {
                 debugger
                 this.loginInfo = true;
                 console.log(this.loginInfo);
